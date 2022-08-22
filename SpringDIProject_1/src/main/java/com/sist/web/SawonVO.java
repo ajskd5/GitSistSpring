@@ -37,4 +37,11 @@ public class SawonVO {
 		this.job = job;
 	}
 	
+	public void print() {
+		System.out.println("사번 : " + sabun);
+		System.out.println("이름 : " + name);
+		System.out.println("부서 : " + dept);
+		System.out.println("직위 : " + job);
+		System.out.println("근무지 : " + loc);
+	}
 }
