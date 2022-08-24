@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.main.movie-mapper">
+	<select id="movieListData" resultType="MovieVO">
+		SELECT mno, title, genre, grade, director, actor, rownum
+		FROM (SELECT mno, title, genre, grade, director, actor 
+		FROM project_movie ORDER BY mno ASC)
+		WHERE rownum &lt;=50
+	</select>
+	<select id="movieFindData" resultType="MovieVO" parameterType="hashmap">
+		SELECT mno, title, genre, actor, director
+		FROM project_movie
+		WHERE
+		<!-- 체크박스 => 다중검색 title, genre, actor 에서 검색 가능하게 -->
+		<!-- 
+			trim => 추가 / 삭제
+			prefix => 앞에 추가
+			suffix => 뒤에 추가
+			prefixOverrides="OR" => 맨 앞에 OR 제거
+			
+				WHERE title LIKE '%'||#{ss}'%'
+				WHERE genre LIKE '%'||#{ss}'%'
+				WHERE actor LIKE '%'||#{ss}'%'
+				
+				WHERE title LIKE '%'||#{ss}'%' OR genre LIKE '%'||#{ss}'%'
+				
+				WHERE title LIKE '%'||#{ss}'%' OR genre LIKE '%'||#{ss}'%' OR WHERE actor LIKE '%'||#{ss}'%'
+				
+				if()
+					title  LIKE '%'||#{ss}'%'
+				if()
+					OR genre  LIKE '%'||#{ss}'%'
+				
+				String[] fsArr = {"", "", ""} => T, G, A로 저장
+		 -->
+		<trim prefix="(" suffix=")" prefixOverrides="OR">
+			<foreach collection="fsArr" item="fd">
+				<trim prefix="OR">
+					<choose>
+						<when test="fd=='T'.toString()">
+							title LIKE '%'||#{ss}||'%'
+						</when>
+						<when test="fd=='G'.toString()">
+							genre LIKE '%'||#{ss}||'%'
+						</when>
+						<when test="fd=='A'.toString()">
+							actor LIKE '%'||#{ss}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</select>
+</mapper>
