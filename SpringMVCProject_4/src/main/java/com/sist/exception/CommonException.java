@@ -11,23 +11,27 @@ public class CommonException {
 	public void runtime(RuntimeException ex) {
 		System.out.println("======== RuntimeException 발생 ========");
 		System.out.println(ex.getMessage());
+		ex.printStackTrace();
 	}
 	
 	@ExceptionHandler(SQLException.class)
 	public void sqlException(SQLException ex) {
 		System.out.println("======== SQLException 발생 ========");
 		System.out.println(ex.getMessage());
+		ex.printStackTrace();
 	}
 	
 	@ExceptionHandler(IOException.class)
 	public void ioException(IOException ex) {
 		System.out.println("======== IOException 발생 ========");
 		System.out.println(ex.getMessage());
+		ex.printStackTrace();
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public void exception(Exception ex) {
 		System.out.println("======== Exception 발생 ========");
 		System.out.println(ex.getMessage());
+		ex.printStackTrace();
 	}
 }

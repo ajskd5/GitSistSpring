@@ -20,4 +20,8 @@ public class GoodsBestDAO {
 	public GoodsVO goodsBestDetailData(int no) {
 		return mapper.goodsBestDetailData(no);
 	}
+	
+	public int goodsBestTotalPage() {
+		return mapper.goodsBestTotalPage();
+	}
 }

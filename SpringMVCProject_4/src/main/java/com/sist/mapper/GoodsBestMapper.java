@@ -20,10 +20,13 @@ public interface GoodsBestMapper {
 		@Result(property = "price", column = "goods_price"),
 		@Result(property = "discount", column = "goods_discount"),
 		@Result(property = "first_price", column = "goods_first_price"),
-		@Result(property = "deliver", column = "goods_deliver"),
+		@Result(property = "delivery", column = "goods_delivery"),
 		@Result(property = "poster", column = "goods_poster")
 	})
 	@Select("SELECT * FROM goods_best "
 			+ "WHERE no=#{no}")
 	public GoodsVO goodsBestDetailData(int no);
+	
+	@Select("SELECT CEIL(COUNT(*)/12.0) FROM goods_best")
+	public int goodsBestTotalPage();
 }

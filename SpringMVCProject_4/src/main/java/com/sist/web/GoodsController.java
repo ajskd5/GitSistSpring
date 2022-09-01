@@ -35,6 +35,14 @@ public class GoodsController {
 		map.put("end", (curpage*12));
 		List<GoodsVO> list = service.goodsAllListData(map);
 		
+		for(GoodsVO vo : list) {
+			String name = vo.getName();
+			if(name.length() > 15) {
+				name = name.substring(0, 15) + "...";
+				vo.setName(name);
+			}
+		}
+		
 		final int BLOCK = 10;
 		int startPage = ((curpage-1)/BLOCK*BLOCK)+1;
 		int endPage = ((curpage-1)/BLOCK*BLOCK)+BLOCK;
@@ -49,9 +57,61 @@ public class GoodsController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("list", list);
-		
+		// model => request
+		/*
+		 *  	public void addAttribute(String key, Object obj){
+		 *  		request.setAttribute(key, obj);
+		 *  	}
+		 *  request를 사용하지 않도록 권장
+		 *  
+		 *  Model = 전송 객체
+		 */
 		return "goods/goods_all";
 	}
 	
+	// goods_all_detail.do?no=${vo.no }
+	@GetMapping("goods_all_detail.do")
+	public String goods_all_detail(int no, Model model) {
+		GoodsVO vo = service.goodsAllDetailData(no);
+		model.addAttribute("vo", vo);
+		return "goods/goods_all_detail";
+	}
+	
+	// 베스트 상품
+	@RequestMapping("goods_best.do")
+	public String goods_best(String page, Model model) {
+		if(page == null) {
+			page = "1";
+		}
+		
+		int curpage = Integer.parseInt(page);
+		int totalpage = service.goodsBestTotalPage();
+		
+		Map map = new HashMap();
+		map.put("start", (curpage*12)-11);
+		map.put("end", (curpage*12));
+		List<GoodsVO> list = service.goodsBestListData(map);
+		
+		for(GoodsVO vo : list) {
+			String name = vo.getName();
+			if(name.length() > 15) {
+				name = name.substring(0, 15) + "...";
+				vo.setName(name);
+			}
+		}
+
+		model.addAttribute("curpage", curpage);
+		model.addAttribute("totalpage", totalpage);
+		model.addAttribute("list", list);
+		
+		return "goods/goods_best";
+	}
+	
+	@RequestMapping("goods_best_detail.do")
+	public String goods_best_detail(int no, Model model) {
+		GoodsVO vo = service.goodsBestDetailData(no);
+		model.addAttribute("vo", vo);
+		return "goods/goods_best_detail";
+	}
 	
 }

@@ -23,7 +23,7 @@ public interface GoodsSpecialMapper {
 		@Result(property = "price", column = "goods_price"),
 		@Result(property = "discount", column = "goods_discount"),
 		@Result(property = "first_price", column = "goods_first_price"),
-		@Result(property = "deliver", column = "goods_deliver"),
+		@Result(property = "delivery", column = "goods_delivery"),
 		@Result(property = "poster", column = "goods_poster")
 	})
 	@Select("SELECT * FROM goods_special "

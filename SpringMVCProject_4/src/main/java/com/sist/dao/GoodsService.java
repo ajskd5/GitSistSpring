@@ -55,4 +55,8 @@ public class GoodsService {
 	public int goodsAllTotalPage() {
 		return aDao.goodsAllTotalpage();
 	}
+	
+	public int goodsBestTotalPage() {
+		return bDao.goodsBestTotalPage();
+	}
 }
