@@ -39,14 +39,24 @@ h1{
           <th class="text-center" width="20%">작성일</th>
           <th class="text-center" width="10%">조회수</th>
         </tr>
+        <c:set var="count" value="${count }"/>
         <c:forEach var="vo" items="${list }">
           <tr>
-            <td class="text-center" width="10%">${vo.no }</td>
-            <td width="45%"><a href="detail.do?no=${vo.no }">${vo.subject }</a></td>
+            <td class="text-center" width="10%">${count }</td>
+            <td width="45%">
+              <c:if test="${vo.group_tab>0 }">
+                <c:forEach  var="i" begin="1" end="${vo.group_tab }">
+                  &nbsp;&nbsp;
+                </c:forEach>
+                <img src="re_icon.gif">
+              </c:if>
+              <a href="detail.do?no=${vo.no }">${vo.subject }</a>
+              </td>
             <td class="text-center" width="15%">${vo.name }</td>
             <td class="text-center" width="20%">${vo.dbday }</td>
             <td class="text-center" width="10%">${vo.hit }</td>
           </tr>
+          <c:set var="count" value="${count-1 }"/>
         </c:forEach>
       </table>
       <table class="table">
