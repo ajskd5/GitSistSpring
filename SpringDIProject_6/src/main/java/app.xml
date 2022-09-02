@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	<!-- MyBatis 연결
+		1. 정보읽기-->
+	<util:properties id="db" location="classpath:db.properties"/>
+
+	<!-- 2. 정보 모아서 MyBatis로 전송 : BasicDataSource -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="#{db['driver']}"
+		p:url="#{db['url']}"
+		p:username="#{db['username']}"
+		p:password="#{db['password']}"
+	/>
+	
+	<!-- 3. MyBatis = SqlSessionFactoryBean 
+			Reader reader = Resources.get~("Config.xml") 이거랑 같음
+	-->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+		p:configLocation="classpath:Config.xml"
+	/>
+	
+	<!-- 4. DAO에 전송 -->
+	<bean id="dao" class="com.sist.di.MovieDAO"
+		p:sqlSessionFactory-ref="ssf"
+	/>
+	
+	<!--
+		스프링에 등록하지 않는 클래스 : ~VO(데이터형), MainClass(클라이언트)
+			등록하는 클래스 : ~DAO, ~Model, ~Manager, ~Service ==>> 컴포넌트 (재사용 가능) => 컴포넌트 모아서 관리하는애 = 컨테이너
+			
+		스프링 = 클래스 관리(등록된 애들) 
+	-->
+	
+</beans>
