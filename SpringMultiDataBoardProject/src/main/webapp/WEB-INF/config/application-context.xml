@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+	
+	<aop:aspectj-autoproxy/><!-- aop : 어노테이션으로 설정 -->
+	
+	<!-- 클래스 선택적 메모리 할당 -->
+	<context:component-scan base-package="com.sist.*"/>
+	
+	<!-- RedirectAttributes : sendRedirect에서 데이터 전송   나머지는 Model:forward-->
+	<mvc:annotation-driven/>
+	
+	<!-- 
+		사용자 요청 ================== DispatcherServlet =================== HandlerMapping
+		
+		1. Dispatcherservlet : 요청 받는다
+		2. HandlerMapping : Model을 찾아준다
+		====================================== web.xml에 등록
+		3. ViewResolver : JSP 찾아주는 역할
+		====================================== 사용자 지정
+			= MultipartResolver
+			= TilesView
+		
+	 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/"
+		p:suffix=".jsp"
+	/>
+	
+	<!-- 파일 업로드
+			multipartResolver : id는 스프링에서 사용중인 id
+	 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		
+	/>
+	
+</beans>
