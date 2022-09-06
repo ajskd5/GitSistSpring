@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- 
+		1. WebSocket (실시간 채팅)
+		2. Security
+		
+		1) Spring Basic
+			= Container (클래스 관리)
+						BeanFactory
+							|
+							XML 버전					자바버전
+						ApplicationContext = AnnotationConfigApplicationContext
+								|
+						WebApplicationContext = AnnotationConfigWebApplicationContext
+						==> DL / DI (클래스 찾기, 객체 생성시 필요한 데이터 추입)
+						==> 클래스와 클래스의 연관관계 설정 (DI)
+			= DI 
+				작은 개념 : 객체 생성시 필요한 데이터 주입, 클래스 객체 주소 주입
+							==============================
+								setter DI, 생성자 DI(매개변수)
+				큰개념 : 클래스와 클래스의 연관관계 설정
+				
+			= AOP
+				중복된 소스를 모아서 필요한 위치에서 호출이 가능하게 만든다 (공통 모듈)
+				OOP를 보완한 개념 (자동화 처리)
+					Before
+					After
+					AfterThrowing
+					AfterReturning
+					asdf{
+						@Before
+						try {
+							Around
+							======
+							
+							========
+							Around
+						} catch(Exception e) {
+							AfterThrowing
+						} finally {
+							After
+						}
+						return ""; ==> AfterReturning
+					}
+					PointCut : AOP대상의 메소드
+					Weaving : 메소드 + AOP
+					Advice : JoinPoint + PointCut
+					====== Advice 여러개 => Aspect
+					
+					=> 트랜잭션, log파일, Security  (인가, 인증, 권한)
+					
+			= MVC
+				Model : 요청처리 ==> 오청에 따라서 데이터베이스 연결 => 결과값 request, session에 담아둠
+						request 대신 (전송 객체 : Model, RedirectAttributes)
+						=> 스프링 : @Controller
+						=> 요청 구분
+							@RequestMapping, @GetMapping, @PostMapping => Annotation
+				View : Model에서 보내준 데이터 출력 = 브라우저 (html, jsp)
+				Controller : Front Controller (DispatcherServlet)
+							요청을 받아서 Model호출 ==> JS로 데이터 전송
+							
+			= ORM : 데이터 베이스 관련 라이브러리
+					MyBatis,  HiberNate(JPA)
+			
+			MVC 동작 구조
+			사용자 요청(JSP) ================ DispatcherServlet ============= 요청에 따라 Model호출
+																					| HandlerMapping
+																			기능별 구분 @RequestMapping, @GetMapping, @PostMapping
+															<==== request, model, session 결과값 받기
+													|
+													| ViewResolver : JSP 를 찾아서 request를 전송
+												  JSP
+												  === 받은 데이터 출력 (JSTL, EL)
+														
+			============ WebSocket / Security / Task
+	 -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/application-*.xml</param-value>
+		</init-param>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<!--  @WebServlet("*.do")  -->
+	 
+	<!-- 
+		request/response  미사용 => 한글 변환 코드
+			request.setCharacterEncoding("UTF-8") 대신하는 코드
+	 -->
+	<filter>
+	  <filter-name>encodingFilter</filter-name>
+	  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	  <init-param>
+	    <param-name>encoding</param-name>
+	    <param-value>UTF-8</param-value>
+	  </init-param>
+	</filter>
+	
+	<filter-mapping>
+	  <filter-name>encodingFilter</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>
