@@ -20,4 +20,19 @@ public interface GoodsMapper {
 	
 	@Select("SELECT * FROM ${table_name} WHERE no=#{no}")
 	public GoodsVO goodsDetailData(Map map);
+	
+	
+	///로그인 처리
+	// ID 체크
+	@Select("SELECT COUNT(*) FROM project_member WHERE id=#{id}")
+	public int idCount(String id);
+	
+	// 비밀번호 비교
+	@Select("SELECT name, pwd FROM project_member WHERE id=#{id}")
+	public MemberVO memberGetPassword(String id);
+	
+	//
+	@Select("SELECT * FROM ${table_name} "
+			+ "WHERE REGEXP_LIKE(goods_name, #{ss})")
+	public List<GoodsVO> goodsFindData(Map map);
 }

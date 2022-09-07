@@ -13,7 +13,7 @@
 	margin-top: 50px;
 }
 .row{
-	maring: 0px auto;
+	margin: 0px auto;
 	width: 100%;
 }
 </style>

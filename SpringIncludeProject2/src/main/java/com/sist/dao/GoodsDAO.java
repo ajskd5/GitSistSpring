@@ -30,4 +30,31 @@ public class GoodsDAO {
 	public GoodsVO goodsDetailData(Map map) {
 		return mapper.goodsDetailData(map);
 	}
+	
+	
+	// 로그인
+	public MemberVO memberLogin(String id, String pwd) {
+		MemberVO vo = new MemberVO();
+		int count = mapper.idCount(id);
+		if(count == 0	) {
+			vo.setMsg("NOID");
+		} else {
+			MemberVO dbVO = mapper.memberGetPassword(id);
+			if(pwd.equals(dbVO.getPwd())) {
+				vo.setId(id);
+				vo.setPwd(pwd);
+				vo.setName(dbVO.getName());
+				vo.setMsg("OK");
+			} else {
+				vo.setMsg("NOPWD");
+			}
+		}
+			
+		return vo;
+	}
+	
+	// 검색
+	public List<GoodsVO> goodsFindData(Map map){
+		return mapper.goodsFindData(map);
+	}
 }
