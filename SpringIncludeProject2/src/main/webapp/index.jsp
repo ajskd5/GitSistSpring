@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-location.href="member/login.do"
+location.href="member/vue_login.do"
 </script>
 </head>
 <body>

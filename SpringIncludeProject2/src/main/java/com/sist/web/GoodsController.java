@@ -13,6 +13,9 @@ public class GoodsController {
 	@Autowired
 	private GoodsDAO dao;
 	
+	@Autowired
+	private ReplyDAO rdao;
+	
 	@GetMapping("goods/best.do")
 	public String goods_best(String page, Model model) {
 		CommonsController.commonsData("goods_best", page, model, dao);
@@ -38,6 +41,13 @@ public class GoodsController {
 	public String all_detail(int no, Model model) {
 		CommonsController.goodsDetailData("goods_all", no, model, dao);
 		model.addAttribute("main_jsp", "../goods/all_detail.jsp");
+		
+		// 댓글
+		ReplyVO vo = new ReplyVO();
+		vo.setBno(no);
+		vo.setType(1);
+		List<ReplyVO> rList = rdao.replyListData(vo);
+		model.addAttribute("rList", rList);
 		return "main/main";
 	}
 	
@@ -59,6 +69,12 @@ public class GoodsController {
 	public String new_detail(int no, Model model) {
 		CommonsController.goodsDetailData("goods_new", no, model, dao);
 		model.addAttribute("main_jsp", "../goods/new_detail.jsp");
+		// 댓글
+		ReplyVO vo = new ReplyVO();
+		vo.setBno(no);
+		vo.setType(2);
+		List<ReplyVO> rList = rdao.replyListData(vo);
+		model.addAttribute("rList", rList);
 		return "main/main";
 	}
 	

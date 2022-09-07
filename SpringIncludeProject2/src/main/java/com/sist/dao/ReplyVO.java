@@ -14,7 +14,6 @@ DEPTH               NUMBER
 TYPE                NUMBER
  */
 import java.util.*;
-
 import lombok.Getter;
 import lombok.Setter;
 @Getter
