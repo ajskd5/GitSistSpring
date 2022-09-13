@@ -24,6 +24,7 @@ public class CommonsAOP {
 	private MusicManager mgr;
 	
 	@After("execution(* com.sist.web.*Controller.*(..))")
+//	@After("execution(* com.sist.web.*Controller.*(..))")
 	public void after() {
 		// 현재 사용중인 request 얻어옴 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
