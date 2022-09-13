@@ -26,8 +26,8 @@ public interface SeoulMapper {
 			+ "WHERE no=#{no}")
 	public void hitIncrement(Map map);
 	
-	@Select("SELECT no, title, poster, rownum "
-			+ "FROM (SELECT no, title, poster "
+	@Select("SELECT no, title, poster, hit, rownum "
+			+ "FROM (SELECT no, title, poster, hit "
 			+ "FROM ${table_name} ORDER BY hit DESC) "
 			+ "WHERE rownum<=5")
 	public List<SeoulVO> seoulTop5(Map map);

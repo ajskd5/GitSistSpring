@@ -14,8 +14,8 @@
         <h3>인기 명소</h3>
         <hr>
         <ul>
-          <c:forEach var="vo" items="${sList }">
-            <li>${vo.title }(${vo.hit })</li>
+          <c:forEach var="svo" items="${sList }">
+            <li>${svo.title }(${svo.hit })</li>
           </c:forEach>
         </ul>
       </div>
@@ -23,14 +23,19 @@
         <h3>인기 자연</h3>
         <hr>
         <ul>
-          <c:forEach var="vo" items="${nList }">
-            <li>${vo.title }(${vo.hit })</li>
+          <c:forEach var="nvo" items="${nList }">
+            <li>${nvo.title }(${nvo.hit })</li>
           </c:forEach>
         </ul>
       </div>
       <div class="col-sm-4">
-        <h3>인기 맛집</h3>
+        <h3>인기 음악</h3>
         <hr>
+        <ul>
+          <c:forEach var="mvo" items="${mList }">
+            <li>${mvo.title }(${mvo.singer })</li>
+          </c:forEach>
+        </ul>
       </div>
     </div>
   </div>
