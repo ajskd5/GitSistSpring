@@ -31,4 +31,5 @@ public interface SeoulMapper {
 			+ "FROM ${table_name} ORDER BY hit DESC) "
 			+ "WHERE rownum<=5")
 	public List<SeoulVO> seoulTop5(Map map);
+	
 }
