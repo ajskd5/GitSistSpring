@@ -9,6 +9,7 @@
 		<!-- include 되는 부분 -->
 		<put-attribute name="header" value="/WEB-INF/main/header.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/main/home.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/main/footer.jsp"/>
 	</definition>
 	<definition name="*/*" extends="main">
 		<put-attribute name="content" value="/WEB-INF/{1}/{2}.jsp"/>
