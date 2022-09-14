@@ -43,6 +43,23 @@ public class FoodServiceImpl implements FoodService{
 	public FoodVO foodDetailData(int fno) {
 		return dao.foodDetailData(fno);
 	}
+
+	// 검색
+	@Override
+	public List<FoodVO> foodFindData(Map map) {
+		return dao.foodFindData(map);
+	}
+	// 검색 총페이지
+	@Override
+	public int foodLocationTotalPage(String address) {
+		return dao.foodLocationTotalPage(address);
+	}
+
+	// Vue 상세보기
+	@Override
+	public FoodVO foodDetailVueData(int fno) {
+		return dao.foodDetailVueData(fno);
+	}
 	
 	
 	

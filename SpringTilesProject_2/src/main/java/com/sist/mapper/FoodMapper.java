@@ -19,11 +19,26 @@ public interface FoodMapper {
 			+ "WHERE cno=#{cno}")
 	public CategoryVO categoryInfoData(int cno);
 	
-	// 맛집 상세보기
+	// 맛집 상세보기 => 명소, 쇼핑, 자연, 레시피
 	@Select("SELECT fno, name, poster, address, score, tel, type, time, parking, menu, price "
 			+ "FROM food_house WHERE fno=#{fno}")
 	public FoodVO foodDetailData(int fno);
 	
-	// 상세보기 => 명소, 쇼핑, 자연, 레시피
 	
+	// 검색
+	@Select("SELECT fno, name, poster, num "
+			+ "FROM (SELECT fno, name, poster, rownum as num "
+			+ "FROM (SELECT fno, name, poster "
+			+ "FROM food_location WHERE address LIKE '%'||#{address}||'%')) "
+			+ "WHERE num BETWEEN #{start} AND #{end}")
+	public List<FoodVO> foodFindData(Map map);
+	// 검색 총페이지
+	@Select("SELECT CEIL(COUNT(*)/12.0) FROM food_location "
+			+ "WHERE address LIKE '%'||#{address}||'%'")
+	public int foodLocationTotalPage(String address);
+	
+	// vue 상세보기
+	@Select("SELECT fno, name, poster, address, score, tel, type, time, parking, menu, price "
+			+ "FROM food_location WHERE fno=#{fno}")
+	public FoodVO foodDetailVueData(int fno);
 }

@@ -10,4 +10,12 @@ public interface FoodService {
 	
 	// 상세보기
 	public FoodVO foodDetailData(int fno);
+	
+	// 검색
+	public List<FoodVO> foodFindData(Map map);
+	// 검색 총 페이지
+	public int foodLocationTotalPage(String address);
+	
+	// Vue 상세보기
+	public FoodVO foodDetailVueData(int fno);
 }
