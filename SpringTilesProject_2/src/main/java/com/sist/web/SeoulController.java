@@ -6,13 +6,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.*;
+
+import com.sist.dao.ReplyDAO;
 import com.sist.service.*;
+import com.sist.vo.ReplyVO;
 import com.sist.vo.SeoulVO;
 
 @Controller
 public class SeoulController {
 	@Autowired
 	private SeoulService service;
+	
+	@Autowired
+	private ReplyDAO dao;
 	
 	private String[] tables = {"", "seoul_location", "seoul_nature", "seoul_shop"};
 	
@@ -49,9 +55,14 @@ public class SeoulController {
 		map.put("table_name", tables[tab]);
 		map.put("no", no);
 		SeoulVO vo = service.seoulDetailData(map);
-		
 		model.addAttribute("vo", vo);
 		model.addAttribute("tab", tab); // tab을 보내야 3개가 따로 작동
+		
+		ReplyVO rvo = new ReplyVO();
+		rvo.setCno(no);
+		rvo.setType(tab);
+		List<ReplyVO> list = dao.replyListData(rvo);
+		model.addAttribute("list", list);
 		
 		return "seoul/detail";
 	}

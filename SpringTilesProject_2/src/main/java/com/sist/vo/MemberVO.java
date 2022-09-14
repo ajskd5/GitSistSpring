@@ -12,5 +12,5 @@ ROLE NOT NULL VARCHAR2(20)
 @Getter
 @Setter
 public class MemberVO {
-	private String id, pwd, name, role;
+	private String id, pwd, name, role, msg;
 }

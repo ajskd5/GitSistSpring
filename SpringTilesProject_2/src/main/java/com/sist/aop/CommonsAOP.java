@@ -24,13 +24,14 @@ public class CommonsAOP {
 	private MusicManager mgr;
 	
 	@After("execution(* com.sist.web.*Controller.*(..))")
-//	@After("execution(* com.sist.web.*Controller.*(..))")
 	public void after() {
 		// 현재 사용중인 request 얻어옴 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		
 		Map map = new HashMap();
 		map.put("table_name", "seoul_location");
 		List<SeoulVO> sList = service.seoulTop5(map);
+		
 		map.put("table_name", "seoul_nature");
 		List<SeoulVO> nList = service.seoulTop5(map);
 		

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sist.vo.*;
 import com.sist.dao.*;
+
 @Service
 public class SeoulServiceImpl implements SeoulService{
 	@Autowired

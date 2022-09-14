@@ -15,7 +15,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReplyVO {
+	// no => 댓글 번호 cno => 글 번호 type => 1,2,3(명소,자연,쇼핑)
 	private int no, cno, type;
-	private String id, name, msg;
+	private String id, name, msg, dbday;
 	private Date regdate;
 }
