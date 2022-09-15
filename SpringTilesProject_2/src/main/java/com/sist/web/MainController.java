@@ -46,4 +46,10 @@ public class MainController {
 		model.addAttribute("list", list);
 		return "main";
 	}
+	
+	// 채팅
+	@GetMapping("chat/chat.do")
+	public String chat_chat() {
+		return "site/chat/chat";
+	}
 }
