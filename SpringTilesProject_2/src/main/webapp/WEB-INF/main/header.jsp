@@ -27,6 +27,9 @@
       <li><a href="../recipe/list.do">레시피</a></li>
       <li><a href="../food/food_find.do">맛집 검색(일반)</a></li>
       <li><a href="../food/food_find_vue.do">맛집 검색(Vue)</a></li>
+      <li><a href="../recommend/recommend.do">맛집 추천(Ajax)</a></li>
+      <li><a href="../recommend/recommend_vue.do">맛집 추천(Vue)</a></li>
+      <li><a href="../chat/chat.do">채팅</a></li>
       
       <c:if test="${sessionScope.id==null }">
         <li><a href="../member/login.do">로그인</a></li>
