@@ -29,13 +29,26 @@ $(function(){
 function recommendData(res){
 	$.ajax({
 		type:'post',
-		url:'../recommend/recemmend_data.do',
+		url:'../recommend/recommend_data.do',
 		data:{"fd":res},
 		success:function(result){
+			//alert(result);
 			let res = JSON.parse(result);
 			let data = "";
+			data = res.map((m)=>(
+				  '<div class="col-md-3">'
+			          +'<div class="thumbnail">'
+			          +'<a href="#">'
+			          +'<img src="' + m.poster + '" alt="Lights" style="width:280px; height: 200px;">'
+			          +'<div class="caption">'
+			          +'<p>' + m.name + '</p>'
+			          +'</div>'
+			          +'</a>'
+			          +'</div>'
+			          +'</div>'
+			));
+			$('#recom').html(data);
 		}
-		//$('#recom').html();
 	})
 }
 </script>

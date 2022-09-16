@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sist.dao.RecommendDAO;
 import com.sist.recommend.NaverDataClass;
 import com.sist.recommend.RecommendManager;
+import com.sist.vo.FoodVO;
 /*
 상황
 휴식 드라이브 산책 집 출/퇴근길 휴가/여행 운동 하우스파티 시상식 일/공부 카페 거리 클럽 고백 해변 공연 라운지 애도 집중
@@ -65,7 +67,7 @@ public class RecommendRestController {
 		return result;
 	}
 	
-	@PostMapping(value = "recommend/recemmend_data.do", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value = "recommend/recommend_data.do", produces = "text/plain;charset=UTF-8")
 	public String recommend_data(String fd) {
 		String result = "";
 		String json = nds.recommendData(fd);
@@ -73,7 +75,7 @@ public class RecommendRestController {
 		List<String> fList = dao.recommendNameData();
 		
 		try {
-			Pattern[] p = new Pattern[list.size()]; // java.util.regexp
+			Pattern[] p = new Pattern[fList.size()]; // java.util.regexp
 			
 			for(int i=0; i<p.length; i++) {
 				p[i] = Pattern.compile(fList.get(i));
@@ -97,14 +99,28 @@ public class RecommendRestController {
 					}
 				}
 			}
+			
+			List<FoodVO> sList = new ArrayList<FoodVO>();
+			
 			// 실제 추천할 데이터 출력
-			for(int i=0; i<fList.size(); i++	) {
+			for(int i=0; i<fList.size(); i++) {
 				String name = fList.get(i);
-				if(count[i] > 2) {
+				if(count[i] >= 2) {
 					System.out.println(name + " : " + count[i]);
+					FoodVO vo = dao.recommendDetailData(name);
+					sList.add(vo);
 				}
 			}
 			
+			JSONArray arr = new JSONArray();
+			for(FoodVO vo : sList) {
+				JSONObject obj = new JSONObject();
+				obj.put("fno", vo.getFno());
+				obj.put("name", vo.getName());
+				obj.put("poster", vo.getPoster().substring(0, vo.getPoster().indexOf("^")));
+				arr.add(obj);
+			}
+			result = arr.toJSONString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
