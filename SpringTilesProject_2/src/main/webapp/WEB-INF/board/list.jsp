@@ -62,7 +62,7 @@
     		totalpage:0
     	},
     	mounted:function(){ // mounted => 시작하자마자 동작
-    		let _this=this; // => 안쓰는 ㅂ아법
+    		let _this=this; // => 안쓰는 방법
     		axios.get("http://localhost:8080/web/board/list_vue.do",{
     			params:{
     				page:_this.curpage

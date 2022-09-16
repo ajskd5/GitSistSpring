@@ -30,4 +30,18 @@ public class BoardController {
 		model.addAttribute("no", no);
 		return "board/detail";
 	}
+	
+	// 수정
+	@GetMapping("board/update.do")
+	public String board_update(int no, Model model) {
+		model.addAttribute("no", no);
+		return "board/update";
+	}
+	
+	//삭제
+	@GetMapping("board/delete.do")
+	public String board_delete(int no, Model model) {
+		model.addAttribute("no", no);
+		return "board/delete";
+	}
 }

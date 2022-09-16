@@ -27,4 +27,37 @@ public class BoardDAO {
 	public void boardInsertData(BoardVO vo) {
 		mapper.boardInsertData(vo);
 	}
+	
+	// 상세보기
+	public BoardVO boardDetailData(int no) {
+		mapper.hitIncrement(no);
+		return mapper.boardDetailData(no);
+	}
+	
+	// 수정창
+	public BoardVO boardUpdateData(int no) {
+		return mapper.boardDetailData(no);
+	}
+	
+	// 수정하기
+	public String boardUpdateData(BoardVO vo) {
+		String result = "no";
+		String db_pwd = mapper.boardGetPassword(vo.getNo());
+		if(db_pwd.equals(vo.getPwd())) {
+			result = "yes";
+			mapper.boardUpdateData(vo);
+		}
+		return result;
+	}
+	
+	// 삭제하기
+	public String boardDeleteData(int no, String pwd) {
+		String result = "no";
+		String db_pwd = mapper.boardGetPassword(no);
+		if(db_pwd.equals(pwd)) {
+			result = "yes";
+			mapper.boardDeleteData(no);
+		}
+		return result;
+	}
 }

@@ -71,4 +71,51 @@ public class BoardRestController {
 		dao.boardInsertData(vo);
 		return "OK";
 	}
+	
+	@GetMapping(value = "board/detail_vue.do", produces = "text/plain;charset=UTF-8")
+	public String board_detail_vue(int no) {
+		String result = "";
+		BoardVO vo = dao.boardDetailData(no);
+		JSONObject obj = new JSONObject();
+		obj.put("no", vo.getNo());
+		obj.put("subject", vo.getSubject());
+		obj.put("content", vo.getContent());
+		obj.put("name", vo.getName());
+		obj.put("dbday", vo.getDbday());
+		obj.put("hit", vo.getHit());
+		
+		result = obj.toJSONString();
+		
+		return result;
+	}
+	
+	// 수정
+	@GetMapping(value = "board/update_vue.do", produces = "text/plain;charset=UTF-8")
+	public String board_update_vue(int no) {
+		String result = "";
+		BoardVO vo = dao.boardUpdateData(no);
+		JSONObject obj = new JSONObject();
+		obj.put("no", vo.getNo());
+		obj.put("subject", vo.getSubject());
+		obj.put("content", vo.getContent());
+		obj.put("name", vo.getName());
+		
+		result = obj.toJSONString();
+		
+		return result;
+	}
+	
+	// 수정완료
+	@GetMapping(value = "board/update_vue_ok.do", produces = "text/plain;charset=UTF-8")
+	public String board_update_vue_ok(BoardVO vo) {
+		String result = dao.boardUpdateData(vo);
+		return result;
+	}
+	
+	// 삭제
+	@GetMapping(value = "board/delete_vue.do", produces = "text/plain;charset=UTF-8")
+	public String board_delete_vue(int no, String pwd) {
+		String result = dao.boardDeleteData(no, pwd);
+		return result;
+	}
 }
