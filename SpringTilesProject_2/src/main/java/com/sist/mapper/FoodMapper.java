@@ -41,4 +41,17 @@ public interface FoodMapper {
 	@Select("SELECT fno, name, poster, address, score, tel, type, time, parking, menu, price "
 			+ "FROM food_location WHERE fno=#{fno}")
 	public FoodVO foodDetailVueData(int fno);
+	
+	
+	// list.jsp
+	@Select("SELECT fno, name, poster, num "
+			+ "FROM (SELECT fno, name, poster, rownum as num "
+			+ "FROM (SELECT fno, name, poster "
+			+ "FROM food_location ORDER BY fno ASC)) "
+			+ "WHERE num BETWEEN #{start} AND #{end}")
+	public List<FoodVO> foodAllData(Map map);
+	// 총페이지
+	@Select("SELECT CEIL(COUNT(*)/12.0) FROM food_location")
+	public int foodTotalPage();
+	
 }

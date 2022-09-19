@@ -42,4 +42,14 @@ public class FoodDAO {
 	public FoodVO foodDetailVueData(int fno) {
 		return mapper.foodDetailVueData(fno);
 	}
+	
+	
+	// list
+	public List<FoodVO> foodAllData(Map map){
+		return mapper.foodAllData(map);
+	}
+	public int foodTotalPage() {
+		return mapper.foodTotalPage();
+	}
+	
 }

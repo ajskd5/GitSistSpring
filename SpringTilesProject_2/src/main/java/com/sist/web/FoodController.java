@@ -84,4 +84,9 @@ public class FoodController {
 		return "food/food_detail_vue";
 	}
 	
+	@GetMapping("food/list_all.do")
+	public String food_list() {
+		return "food/list";
+	}
+	
 }
