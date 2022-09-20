@@ -141,4 +141,31 @@ public class SeoulDAO {
 		mapper.hitIncrement(map);
 		return mapper.seoulDetailData(map);
 	}
+	
+	// 로그인
+	// 로그인 처리
+//	@Select("SELECT COUNT(*) FROM spring_member "
+//			+ "WHERE id=#{id}")
+//	@Select("SELECT pwd, name FROM spring_member "
+//			+ "WHERE id=#{id}")
+	public MemberVO isLogin(String id, String pwd) {
+		MemberVO vo = new MemberVO();
+		System.out.println("asdf");
+		int count = mapper.memberIdCheck(id);
+		System.out.println("qwer");
+		if(count == 0) {
+			vo.setMsg("NOID");
+		} else {
+			MemberVO rvo = mapper.memberInfoData(id);
+			if(pwd.equals(rvo.getPwd())) {
+				vo.setMsg("OK");
+				vo.setName(rvo.getName());
+				vo.setId(id);
+			} else {
+				vo.setMsg("NOPWD");
+			}
+		}
+		
+		return vo;
+	}
 }

@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.sist.dao.*;
 import com.sist.vo.*;
@@ -11,6 +12,7 @@ import com.sist.vo.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SeoulRestController {
 	@Autowired
 	private SeoulDAO sDao;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 	
 	@GetMapping(value = "seoul/list_vue.do", produces = "text/plain;charset=UTF-8")
 	public String seoul_list_vue(String page, String type, Model model) {
@@ -96,7 +100,7 @@ public class SeoulRestController {
 		
 		return result;
 	}
-	
+	// 쿠키
 	@GetMapping(value = "seoul/cook_list.do", produces = "text/plain;charset=UTF-8")
 	public String seoul_cook_list(String type, HttpServletRequest request) {
 		String result = "";
@@ -109,7 +113,7 @@ public class SeoulRestController {
 		
 		List<SeoulVO> list = new ArrayList<SeoulVO>();
 		if(cookies != null) {
-			for(int i=cookies.length; i>=0; i--) {
+			for(int i=cookies.length-1; i>=0; i--) {
 				if(cookies[i].getName().startsWith(cook_name[t])) {
 					String no = cookies[i].getValue();
 					Map map = new HashMap();
@@ -120,9 +124,48 @@ public class SeoulRestController {
 				}
 			}
 		}
-		
-		
-		
+		JSONArray arr = new JSONArray();
+		for(SeoulVO vo : list) {
+			JSONObject obj = new JSONObject();
+			obj.put("no", vo.getNo());
+			obj.put("title", vo.getTitle());
+			obj.put("address", vo.getAddress().substring(vo.getAddress().indexOf(" ")).trim());
+			obj.put("poster", vo.getPoster());
+			obj.put("msg", vo.getMsg());
+			obj.put("hit", vo.getHit());
+			arr.add(obj);
+		}
+		result = arr.toJSONString();
 		return result;
 	}
+	
+	// 로그인 처리
+	@GetMapping(value = "member/login_vue.do", produces = "text/plain;charset=UTF-8")
+	public String login_vue(String id, String pwd, HttpSession session) {
+		String result = "";
+		System.out.println(id);
+		System.out.println(pwd);
+		MemberVO vo = sDao.isLogin(id, pwd);
+		try {
+			
+			String temp = encoder.encode(pwd);
+			System.out.println("pwd : " + pwd + "temp : " + temp);
+			
+			
+			
+			if(vo.getMsg().equals("OK")) {
+				session.setAttribute("id", vo.getId());
+				session.setAttribute("name", vo.getName());
+				// session은 기본이 30분
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		result = vo.getMsg(); // NOID, NOPWD, OK
+		return result;
+	}
+	
+
+	
 }

@@ -22,4 +22,13 @@ public interface SeoulMapper {
 	public void hitIncrement(Map map);
 	@Select("SELECT * FROM ${table_name} WHERE no=#{no}")
 	public SeoulVO seoulDetailData(Map map);
+	
+	// 로그인 처리
+	@Select("SELECT COUNT(*) FROM spring_member "
+			+ "WHERE id=#{id}")
+	public int memberIdCheck(String id);
+	
+	@Select("SELECT pwd, name FROM spring_member "
+			+ "WHERE id=#{id}")
+	public MemberVO memberInfoData(String id);
 }

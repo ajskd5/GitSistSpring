@@ -11,7 +11,7 @@
 	margin-top: 30px;
 }
 .row{
-	maring: 0px auto;
+	margin: 0px auto;
 	width: 100%;
 }
 .images:hover{
@@ -55,17 +55,18 @@
     
     <div style="height: 20px;"></div>
     <div class="row" id="seoul_cookie">
-    
+      <img :src="i.poster" style="width: 100px; height: 100px; margin-left: 5px;" v-for="i in cook_list">
     </div>
   </div>
   <script>
     const list = new Vue({// const는 그냥 구분하기 위함 new Vue로 두번 써도 됨
-    	el:'#seoul_list',
+    	el:'.container',
     	data:{
     		curpage:1,
     		totalpage:0,
     		seoul_list:[],
-    		type:1
+    		type:1,
+    		cook_list:[]
     	},
     	mounted:function(){
     		this.send();
@@ -73,6 +74,7 @@
     	methods:{
     		send:function(){
     			let _this = this;
+    			//리스트 가져오기
         		axios.get("http://localhost:8080/web/seoul/list_vue.do", {
         			params:{
         				page:_this.curpage,
@@ -83,6 +85,15 @@
         			_this.curpage = result.data[0].curpage;
         			_this.totalpage = result.data[0].totalpage;
         			_this.type = result.data[0].type;
+        		})
+        		
+        		// 쿠키 데이터 가져오기
+        		axios.get("http://localhost:8080/web/seoul/cook_list.do", {
+        			params:{
+        				type:_this.type
+        			}
+        		}).then(function(result){
+        			_this.cook_list = result.data;
         		})
     		},
     		seoulChange:function(no){
@@ -98,12 +109,6 @@
     			this.curpage = this.curpage<this.totalpage?this.curpage+1:this.curpage;
     			this.send();
     		}
-    	}
-    })
-    const cook = new Vue({
-    	el:'#seoul_cookie',
-    	data:{
-    		seoul_cook:[]
     	}
     })
   </script>

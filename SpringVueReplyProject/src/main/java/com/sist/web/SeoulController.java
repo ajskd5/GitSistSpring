@@ -41,16 +41,9 @@ public class SeoulController {
 		return "seoul/detail";
 	}
 	
-//	@GetMapping("seoul/detail.do")
-//	public String seoul_detail(int no, int type,  HttpServletResponse response, Model model) {
-//		String[] cmd = {"", "location", "nature", "shop"};
-//		Cookie cookie = new Cookie(cmd[type]+no, String.valueOf(no));
-//		cookie.setPath("/");
-//		cookie.setMaxAge(60*60*24);
-//		response.addCookie(cookie);
-//		
-//		model.addAttribute("no", no);
-//		model.addAttribute("type", type);
-//		return "seoul/detail";
-//	}
+	
+	@GetMapping("seoul/login.do")
+	public String seoul_login() {
+		return "seoul/login";
+	}
 }
