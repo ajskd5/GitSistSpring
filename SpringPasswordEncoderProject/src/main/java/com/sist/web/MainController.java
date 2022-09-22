@@ -16,6 +16,7 @@ public class MainController {
 	private FoodDAO dao;
 	
 	@GetMapping("main/main.do")
+	// 여기서 preHandler() 호출
 	public String main_main(Model model) {
 		List<CategoryVO> list = dao.foodCategoryAllData();
 		

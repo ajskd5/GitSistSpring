@@ -26,8 +26,8 @@ public interface MemberMapper {
 		// 아이디 중복체크
 	@Select("SELECT COUNT(*) FROM spring_join WHERE id=#{id}")
 	public int memberIdCheck(String id);
-	@Insert("INSERT INTO spring_join VALEUS("
-			+ "#{id}, #{pwd}, #{name}, #{sex}, #{birthday}, #{email}, #{post}, #{addr1}, #{addr2}, #{tel}, #{content}, #{sessionId}, #{limited}, 'ROLE_USER'")
+	@Insert("INSERT INTO spring_join VALUES("
+			+ "#{id}, #{pwd}, #{name}, #{sex}, #{birthday}, #{email}, #{post}, #{addr1}, #{addr2}, #{tel}, #{content}, '', null, 'ROLE_USER')")
 	public void memberJoinInsert(MemberVO vo);
 	
 	// 로그인 ==> 복호화

@@ -9,12 +9,63 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 $(function(){
+	$('#okid').hide();
 	//$( "#dialog" ).dialog();
 	$('#idcheck').click(function(){
-		$("#dialog").dialog();
+		$("#dialog").dialog({
+			autoOpen : false,
+			width : 390,
+			height : 250,
+			modal : true
+		}).dialog("open");
 	})
+	
+	$('#okBtn').click(function(){
+		$('#myid').val($('#id').val());
+		$('#dialog').dialog("close");
+	})
+	
+	$('#idBtn').click(function(){
+		let id = $('#id').val();
+		if(id.trim()===""){
+			$('#id').focus();
+			return;
+		}
+		
+		// 스프링 서버로 전송
+		$.ajax({
+			type:'post',
+			url:'../member/idcheck.do',
+			data:{"id":id},
+			success:function(result){
+				let res = result.trim();
+				if(res === 'YES'){
+					let msg='<span style="color:blue">' + id + '는(은) 사용 가능한 아이디입니다</span>';
+					$('#result').html(msg);
+					$('#okid').show();
+					
+				} else {
+					let msg='<span style="color:red">' + id + '는(은) 사용 가능한 아이디입니다</span>';
+					$('#result').html(msg);
+				}
+			}
+		})
+	})
+	
+	// 우편번호 검색
+	$('#postBtn').click(function(){
+		new daum.Postcode({
+			oncomplete:function(data)
+			{
+				$('#post').val(data.zonecode)
+				$('#addr1').val(data.address)
+			}
+		}).open()
+	})
+	
 });
 </script>
 </head>
@@ -27,7 +78,7 @@ $(function(){
         <tr>
           <th width="10%" class="warning text-right">ID</th>
           <td width="90%">
-            <input type="text" class="input-sm" size="20" name="id" readonly="readonly">
+            <input type="text" class="input-sm" size="20" name="id" readonly="readonly" id="myid">
             <input type="button" class="btn btn-sm btn-danger" value="아이디 중복체크" id="idcheck">
           </td>
         </tr>
@@ -65,14 +116,14 @@ $(function(){
         <tr>
           <th width="10%" class="warning text-right">우편번호</th>
           <td width="90%">
-            <input type="text" class="input-sm" size="10" name="post" readonly="readonly">
-            <input type="button" class="btn btn-sm btn-danger" value="우편번호 검색">
+            <input type="text" class="input-sm" size="10" name="post" readonly="readonly" id="post">
+            <input type="button" class="btn btn-sm btn-danger" value="우편번호 검색" id="postBtn">
           </td>
         </tr>
         <tr>
           <th width="10%" class="warning text-right">주소</th>
           <td width="90%">
-            <input type="text" class="input-sm" size="70" name="addr1">
+            <input type="text" class="input-sm" size="70" name="addr1" id="addr1">
           </td>
         </tr>
         <tr>
@@ -103,8 +154,23 @@ $(function(){
       </table>
       </form>
     </div>
-    <div id="dialog" title="Basic dialog" style="display: none">
-	  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the &apos;x&apos; icon.</p>
+    <div id="dialog" title="ID 중복체크" style="display: none">
+	  <table class="table">
+	    <tr>
+	      <td>
+	        아이디 : <input type="text" name="id" size="15" class="input-sm" id="id">
+	        <input type="button" class="btn btn-sm btn-success" id="idBtn" value="아이디체크">
+	      </td>
+	    </tr>
+	    <tr>
+	      <td class="text-center" id="result"></td>
+	    </tr>
+	    <tr id="okid">
+	      <td class="text-center">
+	        <input type="button" class="btn btn-sm btn-info" id="okBtn" value="확인">
+	      </td>
+	    </tr>
+	  </table>
 	</div>
   </div>
 </body>
