@@ -34,12 +34,19 @@ public class FoodRestController {
 	public String food_detail_vue(int fno) {
 		String result = "";
 		FoodVO vo = dao.foodDetailData(fno);
+		
+		String menu = vo.getMenu();
+		menu = menu.replace("원", "^");
+		menu = menu.substring(0, menu.lastIndexOf("^"));
+		vo.setMenu(menu);
+		
+		
 		JSONObject obj = new JSONObject();
 		obj.put("fno", vo.getFno());
 		obj.put("poster", vo.getPoster());
 		obj.put("name", vo.getName());
 		obj.put("score", vo.getScore());
-		obj.put("address", vo.getAddress());
+		obj.put("address", vo.getAddress().substring(0, vo.getAddress().lastIndexOf("지")).trim());
 		obj.put("tel", vo.getTel());
 		obj.put("type", vo.getType());
 		obj.put("time", vo.getTime());

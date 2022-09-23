@@ -15,7 +15,7 @@ public interface FoodMappper {
 	@Select("SELECT cno, title, subject FROM food_category WHERE cno=#{cno}")
 	public CategoryVO categoryInfo(int cno);
 		// 카테고리별 맛집 리스트
-	@Select("SELECT cno, name, tel, poster, address, type, score FROM food_house "
+	@Select("SELECT fno, name, tel, poster, address, type, score FROM food_house "
 			+ "WHERE cno=#{cno}")
 	public List<FoodVO> foodCategoryListData(int cno);
 	// 음식 종류 누르면 레시피 출력

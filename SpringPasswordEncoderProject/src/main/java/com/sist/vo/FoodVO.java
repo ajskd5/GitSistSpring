@@ -22,8 +22,8 @@ RDAY             VARCHAR2(2000)
 @Getter
 @Setter
 public class FoodVO {
-	private int fno, cno;
-	private String name, address, tel, type, price, time, parking, menu, poster;
+	private int fno, cno, hit;
+	private String name, address, tel, type, price, time, parking, menu, poster, rday;
 	private double score;
 	private String id, msg;
 }

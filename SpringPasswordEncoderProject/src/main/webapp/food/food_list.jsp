@@ -77,6 +77,7 @@ $(function(){
                   </td>
                   <td width="70%">
                     <h3><a href="../food/food_detail.do?fno=${vo.fno }">${vo.name }</a>&nbsp;<span style="color: orange">${vo.score }</span></h3>
+                    <h1></h1>
                   </td>
                 </tr>
                 <tr>
