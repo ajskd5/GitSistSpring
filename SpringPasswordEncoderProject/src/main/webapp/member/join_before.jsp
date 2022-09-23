@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <center>
-    <img src="../error/500.png">
-  </center>
+
 </body>
 </html>

@@ -8,7 +8,7 @@
 </head>
 <body>
   <center>
-    <img src="../error/500.png">
+    <img src="../error/400.jpg">
   </center>
 </body>
 </html>
