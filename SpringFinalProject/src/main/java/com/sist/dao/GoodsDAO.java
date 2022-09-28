@@ -39,4 +39,8 @@ public class GoodsDAO {
 	public List<GoodsVO> goodsMainData(Map map){
 		return mapper.goodsMainData(map);
 	}
+	
+	public List<GoodsVO> goodsFooterData(){
+		return mapper.goodsFooterData();
+	}
 }
